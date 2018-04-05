@@ -40,13 +40,6 @@ public class ITProjekt implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		
-		HorizontalPanel hPanel1 = new HorizontalPanel();
-		Label headline = new Label("Notebee");
 		
-		hPanel1.add(headline); 
-		
-		
-		
-		RootPanel.get().add(hPanel1);
 	}
 }
