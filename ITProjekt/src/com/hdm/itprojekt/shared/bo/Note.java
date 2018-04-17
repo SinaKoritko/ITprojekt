@@ -8,12 +8,10 @@ public class Note extends BusinessObject{
 	
 	private int noteID;
 	private String noteTitle;
-	private String noteSubTitle;
 	private String noteContent;
-	private Date noteCreDate;
-	private Date noteModDate;
+	private Date creDate;
+	private Date modDate;
 	private int userID;
-	private int nbID;
 	
 	
 	public int getNoteID() {
@@ -32,14 +30,6 @@ public class Note extends BusinessObject{
 	}
 	
 	
-	public String getNoteSubTitle() {
-		return noteSubTitle;
-	}
-	public void setNoteSubTitle(String noteSubTitle) {
-		this.noteSubTitle = noteSubTitle;
-	}
-	
-	
 	public String getNoteContent() {
 		return noteContent;
 	}
@@ -49,18 +39,18 @@ public class Note extends BusinessObject{
 	
 	
 	public Date getNoteCreDate() {
-		return noteCreDate;
+		return creDate;
 	}
 	public void setNoteCreDate(Date noteCreDate) {
-		this.noteCreDate = noteCreDate;
+		this.creDate = noteCreDate;
 	}
 	
 	
 	public Date getNoteModDate() {
-		return noteModDate;
+		return modDate;
 	}
 	public void setNoteModDate(Date noteModDate) {
-		this.noteModDate = noteModDate;
+		this.modDate = noteModDate;
 	}
 	
 	
@@ -72,12 +62,7 @@ public class Note extends BusinessObject{
 	}
 	
 	
-	public int getNbID() {
-		return nbID;
-	}
-	public void setNbID(int nbID) {
-		this.nbID = nbID;
-	}
+
 	
 	
 	
