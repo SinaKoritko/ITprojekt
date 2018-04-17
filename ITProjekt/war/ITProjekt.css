@@ -32,3 +32,47 @@ h1 {
 #closeButton {
   margin: 15px 6px 6px;
 }
+
+
+#header{
+	background: #D0B09C;
+	height:80px;
+}
+
+#contentBox{
+	background: #EED9C9;
+	height:450px;
+}
+
+#footer{
+	background: #D0B09C;
+	height:30px;
+}
+
+
+.logo {
+	font-family: Noteworthy;
+	font-size: 3.5em;
+	margin-left: 20px;
+	margin-right: 440px;
+	float: left;
+}
+
+
+.loginBtn {
+	float: right;
+	margin-top: 25px;
+	padding: 5px;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-right: 20px;
+}
+
+.displayUsername{
+	text-allign: center;
+	font-family: Tahoma;
+	font-size: 1em;
+	margin-top: 30px;
+	margin-right: 450px;
+	
+}
