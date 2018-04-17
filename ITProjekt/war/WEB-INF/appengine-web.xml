@@ -38,5 +38,15 @@
     stale session data. For details, see
     https://cloud.google.com/appengine/docs/java/config/appconfig#Java_appengine_web_xml_Enabling_sessions
   -->
+  
+  <servlet>
+      <servlet-name>loginService</servlet-name>
+      <servlet-class>com.hdm.itprojekt.server.LoginServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+      <servlet-name>loginService</servlet-name>
+      <url-pattern>notebee/login</url-pattern>
+  </servlet-mapping>
 
 </appengine-web-app>
