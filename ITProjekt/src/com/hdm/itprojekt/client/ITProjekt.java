@@ -116,6 +116,7 @@ public class ITProjekt implements EntryPoint {
 		displayUsername.setStyleName("displayUsername");
 		header.setStyleName("header");
 		footer.setStyleName("footer");
+		copyright.setStyleName("copyright");
 		
 		
 		
