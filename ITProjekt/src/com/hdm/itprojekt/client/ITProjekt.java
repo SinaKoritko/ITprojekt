@@ -110,14 +110,13 @@ public class ITProjekt implements EntryPoint {
 		 */
 		
 		createNoteBtn.addStyleName("createNoteBtn");
-		//noteViewPanel.setStyleName("noteViewPanel");
 		loginLink.setStyleName("loginLink");
 		logo.setStyleName("logo");
 		displayUsername.setStyleName("displayUsername");
 		header.setStyleName("header");
 		footer.setStyleName("footer");
 		copyright.setStyleName("copyright");
-		
+		createNoteBtn.setStyleName("btns");
 		
 		
 		/**Zuteilung der Widgets zum jeweiligen Panel

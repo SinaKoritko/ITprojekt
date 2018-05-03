@@ -35,7 +35,7 @@ public class NoteOverview extends Update{
 	
 	
 	
-	createNoteBtn.addStyleName("createNoteBtn");
+	createNoteBtn.setStyleName("btns");
 	
 	contentPanel.add(createNoteBtn);
 	RootPanel.get("contentBox").add(contentPanel);
