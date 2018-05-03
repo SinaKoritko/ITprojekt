@@ -21,7 +21,6 @@ public class User implements Serializable{
 	
 	private int UserID;
 	private String mail;
-	private String username;
 	private String firstname;
 	private String lastname;
 	
@@ -46,13 +45,6 @@ public class User implements Serializable{
 		this.mail = mail;
 	}
 	
-	
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
 	
 	
 	public String getFirstname() {

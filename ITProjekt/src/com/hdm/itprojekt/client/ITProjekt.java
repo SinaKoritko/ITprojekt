@@ -59,7 +59,7 @@ public class ITProjekt implements EntryPoint {
 	
 	
 	
-	public final static Button createNoteBtn = new Button("new note");
+	final static Button createNoteBtn = new Button("new note");
 	
 	
 	
@@ -154,7 +154,7 @@ public class ITProjekt implements EntryPoint {
 		
 		createNoteBtn.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				//Showcase instantiieren
+				//Showcase/update instantiieren
 				Update update = new EditNoteView();
 				RootPanel.get("contentBox").clear();
 				RootPanel.get("contentBox").add(update);

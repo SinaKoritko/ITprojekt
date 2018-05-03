@@ -1,8 +1,11 @@
-package com.hdm.itprojekt.client.gui;
+package com.hdm.itprojekt.client;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-public interface LoginService {
 
+@RemoteServiceRelativePath("login")
+public interface LoginService extends RemoteService {
+	public LoginInfo login(String requestUri);
 }
+

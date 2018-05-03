@@ -8,11 +8,17 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.hdm.itprojekt.client.ITProjekt;
 import com.hdm.itprojekt.shared.bo.Note;
 import com.hdm.itprojekt.shared.bo.User;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.FocusWidget;
+
+
 
 
 
@@ -23,12 +29,16 @@ public class EditNoteView extends Update{
 	
 	
 	
-	private Note currentNote = new Note();
 	private String noteTitel = new String();
-	private Note newNote = currentNote;
+	Date date = new Date();
+	
+	private Note note = new Note();
+	private Note newNote = new Note();
+	
 	private User user = new User();
 	private User currentUser = new User();
-	Date date = new Date();
+	
+	
 
 	
 	
@@ -46,7 +56,7 @@ public class EditNoteView extends Update{
 	
 	
 	private HorizontalPanel headlinePanel = new HorizontalPanel();
-	private HorizontalPanel textPanel = new HorizontalPanel();
+	private VerticalPanel textPanel = new VerticalPanel();
 	private HorizontalPanel datePanel = new HorizontalPanel();
 	private HorizontalPanel buttonPanel = new HorizontalPanel();
 	
@@ -56,12 +66,13 @@ public class EditNoteView extends Update{
 	   * Erstellung aller Widgets
 	   */
 	
-	private TextBox noteTitle = new TextBox();
+	private TextArea noteTitle = new TextArea();
 	private TextArea textArea = new TextArea();
 	final Button saveNoteBtn = new Button("Speichern");
-	final Button deleteNoteBtn = new Button("Loeschen");
 	final Button cancelEditNoteBtn = new Button("Abbrechen");
-	private Label mainheadline = new Label("Notiz bearbeiten");
+	private Label titleLabel = new Label("Titel");
+	private Label contentLabel = new Label ("Notiz Text");
+	private Label mainheadline = new Label("Notiz erstellen/bearbeiten");
 	private Label creDateLabel = new Label("Erstellungsdatum ");
 	private Label creDate = new Label("");
 	private Label modDateLabel = new Label("Zuletzt bearbeitet am ");
@@ -86,9 +97,10 @@ public class EditNoteView extends Update{
 		
 		headlinePanel.add(mainheadline);
 		buttonPanel.add(saveNoteBtn);
-		buttonPanel.add(deleteNoteBtn);
 		buttonPanel.add(cancelEditNoteBtn);
+		textPanel.add(titleLabel);
 		textPanel.add(noteTitle);
+		textPanel.add(contentLabel);
 		textPanel.add(textArea);
 		datePanel.add(creDateLabel);
 		datePanel.add(creDate);
@@ -101,22 +113,30 @@ public class EditNoteView extends Update{
 		RootPanel.get("contentBox").add(buttonPanel);
 		
 		textArea.setVisibleLines(20);
-		textArea.setPixelSize(420, 350);
-		
-		noteTitle.setEnabled(false);
-		textArea.setEnabled(false);
-		saveNoteBtn.setEnabled(false);
-		saveNoteBtn.setEnabled(false);
-		deleteNoteBtn.setEnabled(false);
+		textArea.setPixelSize(500, 250);
+		noteTitle.setVisibleLines(20);
+		noteTitle.setPixelSize(500, 20);
 		
 		
-		
+
 		
 		 /**
 	     * Zuweisung eines Styles fuer die jeweiligen Widgets
 	     **/
 
 		headlinePanel.setStyleName("headlinePanel");
+		mainheadline.setStyleName("mainheadline");
+		saveNoteBtn.setStyleName("btns");
+		cancelEditNoteBtn.setStyleName("btns");
+		titleLabel.setStyleName("editNoteLabel");
+		contentLabel.setStyleName("editNoteLabel");
+		noteTitle.setStyleName("textbox");
+		textArea.setStyleName("textbox");
+		creDateLabel.setStyleName("dateLabel");
+		creDate.setStyleName("date");
+		modDateLabel.setStyleName("dateLabel");
+		modDate.setStyleName("dateLabel");
+		
 		
 		
 		
@@ -127,6 +147,32 @@ public class EditNoteView extends Update{
 		
 		
 		
+		saveNoteBtn.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event){
+				
+				
+				note.setNoteTitle(noteTitle.getText());
+				note.setNoteContent(textArea.getText());
+				note.setNoteCreDate(date);
+				note.setNoteModDate(date);
+				
+				Update update = new NoteOverview();
+				RootPanel.get("contentBox").clear();
+				RootPanel.get("contentBox").add(update);
+				
+			}
+		});
+		
+		
+		cancelEditNoteBtn.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event){
+				
+				Update update = new NoteOverview();
+				RootPanel.get("contentBox").clear();
+				RootPanel.get("contentBox").add(update);
+				
+			}
+		});
 		
 		
 	}

@@ -1,6 +1,8 @@
-package com.hdm.itprojekt.shared;
+package com.hdm.itprojekt.client;
 
 import java.io.Serializable;
+
+import com.hdm.itprojekt.server.LoginServiceImpl;
 
 
 /**
@@ -27,20 +29,23 @@ public class LoginInfo implements Serializable{
 	
 	
 	
-	public void setLoginUrl(String loginUrl) {
-		this.loginUrl = loginUrl;
+	public boolean isLoggedIn(){
+		return loggedIn;
 	}
+	
+	
+
 	
 	/**
 	 * Get- und Set-Methoden aller Attribute
 	 * @return
 	 */
 	
-	public boolean isLoggedIn(){
-		return loggedIn;
+	public void setLoginUrl(String loginUrl){
+		this.loginUrl = loginUrl;
 	}
-	
 
+	
 	public String getLoginUrl() {
 		return loginUrl;
 	}
@@ -84,6 +89,14 @@ public class LoginInfo implements Serializable{
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
+	}
+
+
+
+
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
+		
 	}
 	
 	
