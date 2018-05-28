@@ -16,6 +16,18 @@
     <url-pattern>/itprojekt/greet</url-pattern>
   </servlet-mapping>
   
+  
+  <servlet>
+    <servlet-name>noteadministration</servlet-name>
+    <servlet-class>com.hdm.itprojekt.server.NoteAdministrationImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>noteadministration</servlet-name>
+    <url-pattern>/itprojekt/noteadministration</url-pattern>
+  </servlet-mapping>
+  
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>ITProjekt.html</welcome-file>
