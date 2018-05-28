@@ -13,7 +13,7 @@ public class DBConnection {
 	 * <code>static</code>
 	 */
 	
-	private static Connection con = null;
+	public static Connection con = null;
 	
 	/**
 	 * Die URL fuer die Google Cloud-SQL Datenbank - angesprochen uebern die
@@ -108,7 +108,7 @@ public class DBConnection {
 			 */
 			
 			catch (Exception e){
-				con=null;
+				con = null;
 				e.printStackTrace();
 			}
 		}
@@ -117,6 +117,11 @@ public class DBConnection {
 		 * Zurueckgegeben der Verbindung
 		 */
 		return con;
+		
+		
+		
+		
+		
 		
 	}
 	
