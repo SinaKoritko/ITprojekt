@@ -82,9 +82,9 @@ public class ITProjekt implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		/**
+	
 		
-		//Login Status abfragen mit Hilfe des Login Service
+		/**Login Status abfragen mit Hilfe des Login Service
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
 			public void onFailure(Throwable error) {
@@ -103,12 +103,32 @@ public class ITProjekt implements EntryPoint {
 		
 		});
 		
-		*/
 	
+*/	
 	
 		/**Add style names
 		 */
 		
+		
+		/**
+		class LoginClickhandler implements ClickHandler{
+			public void onClick(ClickEvent event){
+				//action
+			}
+		}
+		
+		loginLink.addClickHandler(new LoginClickhandler());
+		
+		
+		
+	*/
+		
+		loadView();
+	
+		
+	}
+		
+		public void loadView(){
 		createNoteBtn.addStyleName("createNoteBtn");
 		loginLink.setStyleName("loginLink");
 		logo.setStyleName("logo");
@@ -163,19 +183,6 @@ public class ITProjekt implements EntryPoint {
 
 		
 		
-	
-		/**
-		class LoginClickhandler implements ClickHandler{
-			public void onClick(ClickEvent event){
-				//action
-			}
-		}
-		
-		loginLink.addClickHandler(new LoginClickhandler());
-		
-		
-		
-	*/
 	
 
 	
