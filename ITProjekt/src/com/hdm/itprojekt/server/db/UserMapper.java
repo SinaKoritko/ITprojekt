@@ -82,6 +82,41 @@ public class UserMapper {
 	}
 	
 	
+	
+public User findByMail(String mail){
+		
+		//DB Verbindung herstellen
+		Connection con = DBConnection.connection();
+		
+		try{
+			Statement stmt = con.createStatement();
+			
+			//Statement ausfuellen und als Query an DB senden
+			ResultSet rs = stmt.executeQuery("SELECT userID, mail, firstname, lastname FROM users" 
+					+ "WHERE mail =" + mail);
+			
+			/**
+			 * Da mail einzigartig ist, kann max. nur ein Tupel zurueckgegeben
+			 * werden. Pruefe, ob ein Ergebnis vorliegt.
+			 */
+			
+			if(rs.next()){
+				User user = new User();
+				user.setUserID(rs.getInt("userID"));
+				user.setMail(rs.getString("Mail"));
+				user.setFirstname(rs.getString("firstname"));
+				user.setLastname(rs.getString("lastname"));
+				return user;
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+			return null;
+		}
+		
+		return null;
+	}
+	
+	
 	/**
 	 * Insert-Methode - Ein User-Objekt wird �bergeben und die zugehoerigen
 	 * Werte in ein SQL-Statement geschrieben, welches ausgef�hrt wird, um das

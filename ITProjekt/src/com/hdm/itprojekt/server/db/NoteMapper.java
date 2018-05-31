@@ -5,8 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Vector;
 
 import com.hdm.itprojekt.shared.bo.Note;
+import com.hdm.itprojekt.shared.bo.User;
 
 /**Notebook Mapper Klasse bildet Note-Objekte auf eine relationale Datenbank ab.
  * Diese Klasse stellt Methoden zur Verfuegung, die das erstellen, editieren, auslesen/suchen und loeschen 
@@ -151,6 +153,76 @@ public class NoteMapper {
 		catch (SQLException e){
 			e.printStackTrace();
 		}
+	}
+
+	public Vector<Note> findByUser(User user) {
+		// DB-Verbindung holen und Variablen zurücksetzen
+				int userID = user.getUserID();
+				Connection con = DBConnection.connection();
+				int noteID = 0;
+
+				Vector<Note> result = new Vector<Note>();
+				
+				Vector<Integer> noteIDs = new Vector<Integer>();
+				
+				try{
+					//Leeres SQL Statement anlegen
+					Statement stmt = con.createStatement();
+					
+					//Statement ausfuellen und als Query an DB schicken
+					ResultSet rs = stmt.executeQuery("SELECT noteID FROM notes "
+							+ "WHERE userID=" + userID);
+					
+					while (rs.next()){
+						
+					
+					noteID = rs.getInt("noteID");
+					
+					noteIDs.add(noteID);
+					
+					}
+
+			}
+			catch (SQLException e){
+				e.printStackTrace();
+				return null;
+			}
+			
+			try{
+				
+				for(int i = 0; i < noteIDs.size(); i++){
+					
+					noteID = noteIDs.get(i);
+					
+						//Leeres SQL Statement anlegen
+						Statement stmt2 = con.createStatement();
+						
+						//Statement ausfuellen und als Query an DB schicken
+						ResultSet rs2 = stmt2.executeQuery("SELECT noteID, noteTitle, creaDate, modDate FROM notes "
+								+ "WHERE noteID=" + noteID);
+						
+						while (rs2.next()){
+							
+						
+							Note note = new Note();
+							note.setNoteID(rs2.getInt("noteID"));
+							note.setNoteTitle(rs2.getString("noteTitle"));
+							note.setNoteCreDate(rs2.getDate("creaDate"));
+							note.setNoteModDate(rs2.getDate("modDate"));
+							
+							// Neues Objekt wird dem Ergebnisvektor hinzugefuegt
+							result.addElement(note);
+						
+						}
+				}
+			}
+				catch (SQLException e){
+
+					e.printStackTrace();
+					return null;
+				}
+				return result;
+
 	}
 	
 }
