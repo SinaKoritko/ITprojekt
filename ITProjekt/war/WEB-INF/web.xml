@@ -6,7 +6,7 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets -->
-  <servlet>
+  <!-- <servlet>
     <servlet-name>greetServlet</servlet-name>
     <servlet-class>com.hdm.itprojekt.server.GreetingServiceImpl</servlet-class>
   </servlet>
@@ -15,7 +15,7 @@
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/itprojekt/greet</url-pattern>
   </servlet-mapping>
-  
+ --> 
   
   <servlet>
     <servlet-name>noteadministration</servlet-name>
