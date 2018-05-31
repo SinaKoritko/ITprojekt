@@ -25,9 +25,9 @@ public interface NoteAdministration extends RemoteService{
 	  
 	  public User getCurrentUser(User user) throws IllegalArgumentException;
 	  
-	  public User getUserByMail(User user) throws IllegalArgumentException;
+	  public User getUserByMail(String mail) throws IllegalArgumentException;
 	  
-	  public User getUserByID(User user) throws IllegalArgumentException;
+	  public User getUserByID(int userID) throws IllegalArgumentException;
 	  
 	  public User editUser(User user) throws IllegalArgumentException;
 	  
@@ -41,6 +41,9 @@ public interface NoteAdministration extends RemoteService{
 	  public void deleteNote(Note note) throws IllegalArgumentException;
 	  
 	  public ArrayList<Note> getNotesOfUser(User user) throws IllegalArgumentException;
+
+
+	
 	  
 	  
 	  

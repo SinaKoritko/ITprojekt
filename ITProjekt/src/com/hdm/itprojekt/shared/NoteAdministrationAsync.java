@@ -17,9 +17,9 @@ public interface NoteAdministrationAsync {
 	  
 	  void getCurrentUser(User user, AsyncCallback<User> callback);
 	  
-	  void getUserByMail(User user, AsyncCallback<User> callback);
+	  void getUserByMail(String mail, AsyncCallback<User> callback);
 	  
-	  void getUserByID(User user, AsyncCallback<User> callback);
+	  void getUserByID(int userID, AsyncCallback<User> callback);
 	  
 	  void editUser(User user, AsyncCallback<User> callback);
 	  
