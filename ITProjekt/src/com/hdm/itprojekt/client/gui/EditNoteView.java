@@ -153,8 +153,8 @@ public class EditNoteView extends Update{
 				
 				note.setNoteTitle(noteTitle.getText());
 				note.setNoteContent(textArea.getText());
-				note.setNoteCreDate(date);
-				note.setNoteModDate(date);
+				note.setCreDate(date);
+				note.setModDate(date);
 				
 				Update update = new NoteOverview();
 				RootPanel.get("contentBox").clear();

@@ -183,8 +183,8 @@ implements NoteAdministration {
 		if (vector.size() == 0){
 			Note currentNote = new Note();
 			currentNote.setNoteTitle("erste Notiz");
-			currentNote.setNoteModDate(date);
-			currentNote.setNoteCreDate(date);
+			currentNote.setModDate(date);
+			currentNote.setCreDate(date);
 			currentNote = this.createNote(currentNote);
 			vector = this.noteMapper.findByUser(user);
 			

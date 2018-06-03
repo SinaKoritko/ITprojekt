@@ -103,7 +103,7 @@ public User findByMail(String mail){
 			if(rs.next()){
 				User user = new User();
 				user.setUserID(rs.getInt("userID"));
-				user.setMail(rs.getString("Mail"));
+				user.setMail(rs.getString("mail"));
 				user.setFirstname(rs.getString("firstname"));
 				user.setLastname(rs.getString("lastname"));
 				return user;
@@ -153,7 +153,7 @@ public User findByMail(String mail){
 				stmt = con.createStatement();
 				
 				//Einfuegeoperation fuer Statement
-				stmt.executeUpdate("INSERT INTO users (userID, mail, firstname, lastname)" + "VALUES (" + user.getUserID() + "," + user.getMail() + "," + user.getFirstname() + "," + user.getLastname() + ")" );
+				stmt.executeUpdate("INSERT INTO users (userID, mail, firstname, lastname)" + "VALUES ('" + user.getUserID() + "','" + user.getMail() + "','" + user.getFirstname() + "','" + user.getLastname() + "')" );
 				
 				return user;
 				
@@ -210,7 +210,7 @@ public User findByMail(String mail){
 		try{
 			Statement stmt = con.createStatement();
 			
-			stmt.executeUpdate("UPDATE users" + "SET firstname =" + user.getFirstname() + "," + "lastname =" + user.getLastname() + "WHERE userID =" + user.getUserID());
+			stmt.executeUpdate("UPDATE users" + "SET firstname ='" + user.getFirstname() + "'," + "lastname ='" + user.getLastname() + "WHERE userID =" + user.getUserID());
 		
 		} catch(SQLException e){
 			e.printStackTrace();

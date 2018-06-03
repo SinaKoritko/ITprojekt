@@ -38,19 +38,19 @@ public class Note extends BusinessObject{
 	}
 	
 	
-	public Date getNoteCreDate() {
+	public Date getCreDate() {
 		return creDate;
 	}
-	public void setNoteCreDate(Date noteCreDate) {
-		this.creDate = noteCreDate;
+	public void setCreDate(Date CreDate) {
+		this.creDate = CreDate;
 	}
 	
 	
-	public Date getNoteModDate() {
+	public Date getModDate() {
 		return modDate;
 	}
-	public void setNoteModDate(Date noteModDate) {
-		this.modDate = noteModDate;
+	public void setModDate(Date modDate) {
+		this.modDate = modDate;
 	}
 	
 	

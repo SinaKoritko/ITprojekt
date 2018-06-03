@@ -68,16 +68,16 @@ public class NoteMapper {
 			//Statement ausfuellen und als Query an DB senden
 			ResultSet rs = stmt.executeQuery("SELECT MAX(noteID) AS maxnoteID" + "FROM notes");
 			
-			String noteModDate = null;
-			if (note.getNoteModDate() != null){
+			String modDate = null;
+			if (note.getModDate() != null){
 				SimpleDateFormat mySQLformat = new SimpleDateFormat("yyyy-MM-dd");
-				noteModDate = mySQLformat.format(note.getNoteModDate());
+				modDate = mySQLformat.format(note.getModDate());
 			}
 			
-			String noteCreDate = null;
-			if (note.getNoteCreDate() != null){
+			String creDate = null;
+			if (note.getCreDate() != null){
 				SimpleDateFormat mySQLformat = new SimpleDateFormat("yyyy-MM-dd");
-				noteCreDate = mySQLformat.format(note.getNoteCreDate());
+				creDate = mySQLformat.format(note.getCreDate());
 			}
 			
 			/**
@@ -90,9 +90,10 @@ public class NoteMapper {
 				note.setNoteID(rs.getInt("maxnoteID") + 1);
 				stmt = con.createStatement();
 				
-				stmt.executeUpdate("INSERT INTO notes (noteID, noteTitle, noteContent, noteCreDate, noteModDate, userID)"
+				// Jetzt erst erfolgt die tatsächliche Einfügeoperation
+				stmt.executeUpdate("INSERT INTO notes (noteID, noteTitle, noteContent, creDate, modDate, userID)"
 									+ "VALUES (" + note.getNoteID() + "," + note.getNoteTitle() + "," 
-									+ note.getNoteContent() + "," + noteCreDate + "," + noteModDate + ")");
+									+ note.getNoteContent() + "," + creDate + "," + modDate + ")");
 			}
 		}
 		catch (SQLException e){
@@ -117,15 +118,15 @@ public class NoteMapper {
 	public Note updateNote(Note note){
 		Connection con = DBConnection.connection();
 		
-		String noteModDate = null;
-		if (note.getNoteModDate() != null){
+		String modDate = null;
+		if (note.getModDate() != null){
 			SimpleDateFormat mySQLformat = new SimpleDateFormat("yyyy-MM-dd");
-			noteModDate = mySQLformat.format(note.getNoteModDate());
+			modDate = mySQLformat.format(note.getModDate());
 		}
 		
 		try{
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("UPDATE notes " + "SET title =" + note.getNoteTitle() + "," + "noteContent =" + note.getNoteContent() + "," + "noteModDate =" + noteModDate + "WHERE noteID =" + note.getNoteID());
+			stmt.executeUpdate("UPDATE notes " + "SET title ='" + note.getNoteTitle() + "'," + "noteContent ='" + note.getNoteContent() + "'," + "noteModDate =" + modDate + "WHERE noteID =" + note.getNoteID());
 		}
 		
 		catch(SQLException e){
@@ -207,8 +208,8 @@ public class NoteMapper {
 							Note note = new Note();
 							note.setNoteID(rs2.getInt("noteID"));
 							note.setNoteTitle(rs2.getString("noteTitle"));
-							note.setNoteCreDate(rs2.getDate("creaDate"));
-							note.setNoteModDate(rs2.getDate("modDate"));
+							note.setCreDate(rs2.getDate("creaDate"));
+							note.setModDate(rs2.getDate("modDate"));
 							
 							// Neues Objekt wird dem Ergebnisvektor hinzugefuegt
 							result.addElement(note);
