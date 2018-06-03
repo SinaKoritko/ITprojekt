@@ -60,8 +60,8 @@ public class DBConnection {
 			 * vollen Zugriff auf die DB hat.
 			 */
 			
-			String user = "root";
-			String password = "";
+			String user = "testuser";
+			String password = "test";
 			
 			try{
 				if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production){
