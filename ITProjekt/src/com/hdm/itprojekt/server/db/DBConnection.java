@@ -56,7 +56,7 @@ public class DBConnection {
 			String url = null;
 			
 			/**
-			 * Zugangsdaten fuer einen Nicht-root-Account zur Cloud SQL, der
+			 * Zugangsdaten fuer einen Nicht-root-Account zur lokalen DB, der
 			 * vollen Zugriff auf die DB hat.
 			 */
 			
