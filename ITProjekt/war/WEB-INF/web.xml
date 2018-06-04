@@ -6,16 +6,16 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets -->
-  <!-- <servlet>
-    <servlet-name>greetServlet</servlet-name>
+  <servlet>
+    <servlet-name>greet</servlet-name>
     <servlet-class>com.hdm.itprojekt.server.GreetingServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
+    <servlet-name>greet</servlet-name>
     <url-pattern>/itprojekt/greet</url-pattern>
   </servlet-mapping>
- --> 
+ 
   
   <servlet>
     <servlet-name>noteadministration</servlet-name>
@@ -27,6 +27,16 @@
     <url-pattern>/itprojekt/noteadministration</url-pattern>
   </servlet-mapping>
   
+  
+  <servlet>
+    <servlet-name>login</servlet-name>
+    <servlet-class>com.hdm.itprojekt.server.LoginServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>login</servlet-name>
+    <url-pattern>/itprojekt/login</url-pattern>
+  </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>

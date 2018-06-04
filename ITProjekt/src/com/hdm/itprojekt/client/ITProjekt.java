@@ -41,9 +41,9 @@ import com.google.gwt.user.client.ui.Label;
  */
 public class ITProjekt implements EntryPoint {
 	
-/**	LoginServiceAsync loginService = GWT.create(LoginService.class);
+	LoginServiceAsync loginService = GWT.create(LoginService.class);
 	private LoginInfo loginInfo = null;
-	*/
+	
 	
 	private VerticalPanel mainPanel = new VerticalPanel();
 	private HorizontalPanel header = new HorizontalPanel();
@@ -62,7 +62,7 @@ public class ITProjekt implements EntryPoint {
 	final static Button createNoteBtn = new Button("new note");
 	
 	
-	
+	private User currentUser = null;
 	
 	
 	/**
@@ -70,9 +70,9 @@ public class ITProjekt implements EntryPoint {
 	 * returns an error.
 	 */
 	
-	/**private static final String SERVER_ERROR = "An error occurred while "
+	private static final String SERVER_ERROR = "An error occurred while "
 			+ "attempting to contact the server. Please check your network " + "connection and try again.";
-*/
+
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
@@ -84,7 +84,7 @@ public class ITProjekt implements EntryPoint {
 	public void onModuleLoad() {
 	
 		
-		/**Login Status abfragen mit Hilfe des Login Service
+		//Login Status abfragen mit Hilfe des Login Service
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
 			public void onFailure(Throwable error) {
@@ -104,13 +104,13 @@ public class ITProjekt implements EntryPoint {
 		});
 		
 	
-*/	
+	
 	
 		/**Add style names
 		 */
 		
 		
-		/**
+		
 		class LoginClickhandler implements ClickHandler{
 			public void onClick(ClickEvent event){
 				//action
@@ -121,7 +121,7 @@ public class ITProjekt implements EntryPoint {
 		
 		
 		
-	*/
+	
 		
 		loadView();
 	
@@ -142,10 +142,6 @@ public class ITProjekt implements EntryPoint {
 		/**Zuteilung der Widgets zum jeweiligen Panel
 		 * */
 	
-		//mainPanel.add(header);
-		//mainPanel.add(navigationPanel);
-		//mainPanel.add(contentPanel);
-		//mainPanel.add(footer);
 		
 		contentPanel.add(createNoteBtn);
 
@@ -163,7 +159,7 @@ public class ITProjekt implements EntryPoint {
 		 * Associate main panel with HTML host page
 		 */
 		
-		//RootPanel.get("mainBox").add(mainPanel);
+		
 		RootPanel.get("header").add(header);
 		RootPanel.get("contentBox").add(contentPanel);			
 		RootPanel.get("navigation").add(navigationPanel);
@@ -191,8 +187,8 @@ public class ITProjekt implements EntryPoint {
 	
 	
 	
-	/**private void loadLogin(){
+	private void loadLogin(){
 		loginLink.setHref(loginInfo.getLoginUrl());
 	}
-	*/
+	
 }

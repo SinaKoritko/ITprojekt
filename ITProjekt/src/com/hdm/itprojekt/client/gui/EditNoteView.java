@@ -150,6 +150,12 @@ public class EditNoteView extends Update{
 		saveNoteBtn.addClickHandler(new ClickHandler(){
 			public void onClick(ClickEvent event){
 				
+				/*
+				 * Speichern der eingegebenen Werte blockieren, um
+				 * Mehrfach-Klicks und daraus entstehende, unnoetige Eintraege in
+				 * der Datenbank zu verhindern.
+				 */
+				saveNoteBtn.setEnabled(false);
 				
 				note.setNoteTitle(noteTitle.getText());
 				note.setNoteContent(textArea.getText());
