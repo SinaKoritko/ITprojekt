@@ -21,10 +21,7 @@ implements NoteAdministration {
 
 	
 
-	/**
-	 * Eindeutige SerialVersion ID. Wird zum Serialisieren der Klasse benoetigt.
-	 */
-	private static final long serialVersionUID = 1L;
+	
 	
 	
 	

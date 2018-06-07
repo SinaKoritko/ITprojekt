@@ -22,6 +22,8 @@ public class UserMapper {
 		
 	}
 	
+
+	
 	/**
 	 * Aufruf eines USER-Mappers fuer Klassen, die keinen Zugriff auf den
 	 * Konstruktor haben.

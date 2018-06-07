@@ -84,6 +84,7 @@ public class ITProjekt implements EntryPoint {
 	public void onModuleLoad() {
 	
 		
+		
 		//Login Status abfragen mit Hilfe des Login Service
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
