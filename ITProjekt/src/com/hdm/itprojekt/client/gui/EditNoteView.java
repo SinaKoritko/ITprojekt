@@ -2,6 +2,7 @@ package com.hdm.itprojekt.client.gui;
 
 import java.util.Date;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -9,11 +10,15 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.hdm.itprojekt.client.ITProjekt;
+import com.hdm.itprojekt.shared.NoteAdministration;
+import com.hdm.itprojekt.shared.NoteAdministrationAsync;
 import com.hdm.itprojekt.shared.bo.Note;
 import com.hdm.itprojekt.shared.bo.User;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.view.client.ListDataProvider;
+import com.google.appengine.api.xmpp.Error;
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.FocusWidget;
@@ -26,14 +31,14 @@ import com.google.gwt.user.client.ui.FocusWidget;
 public class EditNoteView extends Update{
 
 	
-	
+	private final NoteAdministrationAsync noteAdministration = GWT.create(NoteAdministration.class);
 	
 	
 	private String noteTitel = new String();
 	Date date = new Date();
 	
 	private Note note = new Note();
-	private Note newNote = new Note();
+	private Note currentNote = new Note();
 	
 	private User user = new User();
 	private User currentUser = new User();
@@ -70,6 +75,7 @@ public class EditNoteView extends Update{
 	private TextArea textArea = new TextArea();
 	final Button saveNoteBtn = new Button("Speichern");
 	final Button cancelEditNoteBtn = new Button("Abbrechen");
+	final Button deleteNoteBtn = new Button("Loeschen");
 	private Label titleLabel = new Label("Titel");
 	private Label contentLabel = new Label ("Notiz Text");
 	private Label mainheadline = new Label("Notiz erstellen/bearbeiten");
@@ -98,6 +104,7 @@ public class EditNoteView extends Update{
 		headlinePanel.add(mainheadline);
 		buttonPanel.add(saveNoteBtn);
 		buttonPanel.add(cancelEditNoteBtn);
+		buttonPanel.add(deleteNoteBtn);
 		textPanel.add(titleLabel);
 		textPanel.add(noteTitle);
 		textPanel.add(contentLabel);
@@ -127,6 +134,7 @@ public class EditNoteView extends Update{
 		headlinePanel.setStyleName("headlinePanel");
 		mainheadline.setStyleName("mainheadline");
 		saveNoteBtn.setStyleName("btns");
+		deleteNoteBtn.setStyleName("btns");
 		cancelEditNoteBtn.setStyleName("btns");
 		titleLabel.setStyleName("editNoteLabel");
 		contentLabel.setStyleName("editNoteLabel");
@@ -136,6 +144,9 @@ public class EditNoteView extends Update{
 		creDate.setStyleName("date");
 		modDateLabel.setStyleName("dateLabel");
 		modDate.setStyleName("dateLabel");
+		
+
+		
 		
 		
 		
@@ -157,17 +168,32 @@ public class EditNoteView extends Update{
 				 */
 				saveNoteBtn.setEnabled(false);
 				
-				note.setNoteTitle(noteTitle.getText());
-				note.setNoteContent(textArea.getText());
-				note.setCreDate(date);
-				note.setModDate(date);
 				
-				Update update = new NoteOverview();
-				RootPanel.get("contentBox").clear();
-				RootPanel.get("contentBox").add(update);
+				currentNote.setNoteTitle(noteTitle.getText());
+				currentNote.setNoteContent(textArea.getText());
+				Date currentDate = new Date();
+				currentNote.setModDate(currentDate);
+				
+				
+					
+				// bestehende Notiz wird anhand von currentUser ID editiert
+				noteAdministration.editNote(currentNote, new AsyncCallback<Note>(){
+					public void onFailure(Throwable errorMessage){
+					}
+					
+					public void onSuccess(Note result){
+						Update update = new NoteOverview();
+						RootPanel.get("contentBox").clear();
+						RootPanel.get("contentBox").add(update);
+					}
+				
+				
+				});
 				
 			}
+			
 		});
+		
 		
 		
 		cancelEditNoteBtn.addClickHandler(new ClickHandler(){
@@ -178,10 +204,17 @@ public class EditNoteView extends Update{
 				RootPanel.get("contentBox").add(update);
 				
 			}
+		
+		
 		});
 		
 		
-	}
+			}
+		
+			
 	
 	
+
 }
+	
+
