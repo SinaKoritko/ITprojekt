@@ -23,7 +23,7 @@ public class LoginInfo implements Serializable{
 	private boolean loggedIn = false;
 	private String loginUrl;
 	private String logoutUrl;
-	private String email;
+	private String mail;
 	private String firstname;
 	private String lastname;
 	
@@ -62,13 +62,13 @@ public class LoginInfo implements Serializable{
 	}
 	
 
-	public String getEmail() {
-		return email;
+	public String getMail() {
+		return mail;
 	}
 
 	
-	public void setEmail(String email) {
-		this.email = email;
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 
 	

@@ -98,17 +98,17 @@ implements NoteAdministration {
 	 * Auslesen des aktuellen Benutzernamen aus der Google Accounts API, um
 	 * das Profil des aktuellen Benutzers aus der Datenbank zu lesen.
 	 */
-	/**
+	
 	public User getCurrentUser() throws IllegalArgumentException {
-		User currentUser = new User();
 		UserService userService = UserServiceFactory.getUserService();
 		com.google.appengine.api.users.User user = userService.getCurrentUser();
+		User currentUser = new User();
 		String mail = user.getEmail();
 		currentUser = this.getUserByMail(mail);
 		return currentUser;
 	}
 	
-	*/
+	
 	
 
 	public User getUserByMail(String mail) throws IllegalArgumentException{
@@ -153,10 +153,10 @@ implements NoteAdministration {
 	
 	@Override
 	public Note createNote(Note note) throws IllegalArgumentException {
-		Note currentNote = new Note();
-		currentNote = this.noteMapper.createNote(note);
+		Note newNote = new Note();
+		newNote = this.noteMapper.createNote(note);
 
-		return currentNote;
+		return newNote;
 	}
 
 	

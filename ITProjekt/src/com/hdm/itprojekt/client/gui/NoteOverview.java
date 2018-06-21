@@ -45,7 +45,7 @@ public class NoteOverview extends Update{
 	createNoteBtn.addClickHandler(new ClickHandler() {
 		public void onClick(ClickEvent event) {
 			//Showcase/update instantiieren
-			Update update = new EditNoteView();
+			Update update = new CreateNoteView();
 			RootPanel.get("contentBox").clear();
 			RootPanel.get("contentBox").add(update);
 		}
