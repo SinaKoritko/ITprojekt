@@ -2,7 +2,10 @@ package com.hdm.itprojekt.client;
 
 import java.io.Serializable;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.hdm.itprojekt.server.LoginServiceImpl;
+import com.hdm.itprojekt.shared.bo.User;
 
 
 /**
@@ -23,10 +26,10 @@ public class LoginInfo implements Serializable{
 	private boolean loggedIn = false;
 	private String loginUrl;
 	private String logoutUrl;
-	private String mail;
-	private String firstname;
-	private String lastname;
-	
+	private String emailAddress;
+
+	UserService userService = UserServiceFactory.getUserService();
+	com.google.appengine.api.users.User user = userService.getCurrentUser();
 	
 	
 	public boolean isLoggedIn(){
@@ -63,33 +66,16 @@ public class LoginInfo implements Serializable{
 	
 
 	public String getMail() {
-		return mail;
+		return emailAddress;
 	}
 
 	
 	public void setMail(String mail) {
-		this.mail = mail;
+		this.emailAddress = mail;
 	}
 
 	
-	public String getFirstname() {
-		return firstname;
-	}
 	
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-	
-
-	public String getLastname() {
-		return lastname;
-	}
-	
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
 
 
 

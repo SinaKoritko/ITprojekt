@@ -136,38 +136,16 @@ public class ITProjekt implements EntryPoint {
 		LoginServiceAsync loginService = GWT.create(LoginService.class);
 		loginService.login(GWT.getHostPageBaseURL(), new AsyncCallback<LoginInfo>() {
 			public void onFailure(Throwable error) {
+				Window.alert("Login Fehler");
 			}
 			
 			public void onSuccess(LoginInfo result) {
-				if(Location.getParameter("url") != null) Cookies.setCookie("url", Location.getParameter("url"));
 				loginInfo = result;
 				ClientsideSettings.setLoginInfo(result);
 				if(loginInfo.isLoggedIn()) {
-					administrationService.getUserByMail(loginInfo.getMail(), new AsyncCallback<User>(){
-
-						@Override
-						public void onFailure(Throwable caught) {
-							Window.alert("Fehler: Nutzer konnte in der Datenbank nicht gefunden werden. Details: "+caught);	
-						}
-
-						@Override
-						public void onSuccess(User currentUser) {
-							if(currentUser != null){
-								Cookies.setCookie("userID", String.valueOf(currentUser.getUserID()));
-								loadView();
-								if(Cookies.getCookie("url") != null){
-									Update update = new NoteOverview();
-									RootPanel.get("contentBox").clear();
-									RootPanel.get("contentBox").add(update);	
-								}
-							}else{
-								Cookies.removeCookie("userID");
-								loginInfo.setLoggedIn(false);
-							}
-							
-						}
-						
-					});
+					Update update = new NoteOverview();
+					RootPanel.get("contentBox").clear();
+					RootPanel.get("contentBox").add(update);	
 				}
 				else {
 					loadLogin();
@@ -198,28 +176,33 @@ public class ITProjekt implements EntryPoint {
 		//Conenct list to data provider
 		nDataProvider.addDataDisplay(nCellList);
 		
+	}
+	
+	
+	
 		
-		/**Add style names
-		 */
 		
+	public void loadLogin(){
+		loginLink.setHref(loginInfo.getLoginUrl());
 		
+		loginLink.setStyleName("loginLink");
+		logo.setStyleName("logo");
+		header.setStyleName("header");
+		footer.setStyleName("footer");
+		copyright.setStyleName("copyright");
 		
-		class LoginClickhandler implements ClickHandler{
-			public void onClick(ClickEvent event){
-				//action
-			}
+		header.add(logo);
+		header.add(loginLink);
+		footer.add(copyright);
 		}
 		
-		loginLink.addClickHandler(new LoginClickhandler());
-		
-		
+
+
 		
 	
 		
-		loadView();
 	
-		
-	}
+	
 		
 		public void loadView(){
 		createNoteBtn.addStyleName("createNoteBtn");
@@ -314,15 +297,7 @@ public class ITProjekt implements EntryPoint {
 	
 	
 	
-	private void loadLogin(){
-		Cookies.setCookie("mail", null);
-		Cookies.setCookie("userID", null);
-		loginLink.setHref(loginInfo.getLoginUrl());
-		
-		Update update = new NoteOverview();
-		RootPanel.get("contentBox").clear();
-		RootPanel.get("contentBox").add(update);
-	}
+	
 	
 	
 	private AsyncCallback<User> getCurrentUserCallback(){

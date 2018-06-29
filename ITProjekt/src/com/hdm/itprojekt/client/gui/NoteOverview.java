@@ -2,6 +2,7 @@ package com.hdm.itprojekt.client.gui;
 
 import java.util.Date;
 
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -32,6 +33,7 @@ public class NoteOverview extends Update{
 	
 	final VerticalPanel contentPanel = new VerticalPanel();
 	final Button createNoteBtn = new Button("new note");
+	
 	
 	
 	

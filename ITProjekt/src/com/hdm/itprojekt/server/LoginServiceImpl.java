@@ -16,12 +16,12 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
 
 	public LoginInfo login(String requestUri){
 		UserService userService = UserServiceFactory.getUserService();
-		User user = userService.getCurrentUser();
+		User currentuser = userService.getCurrentUser();
 		LoginInfo loginInfo = new LoginInfo();
 		
-		if (user != null){
+		if (currentuser != null){
 			loginInfo.setLoggedIn(true);
-			loginInfo.setMail(user.getEmail());
+			loginInfo.setMail(currentuser.getEmail());
 			loginInfo.setLogoutUrl(userService.createLogoutURL(requestUri));
 		}
 		else{
