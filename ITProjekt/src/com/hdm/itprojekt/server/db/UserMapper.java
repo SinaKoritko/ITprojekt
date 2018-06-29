@@ -59,8 +59,7 @@ public class UserMapper {
 			Statement stmt = con.createStatement();
 			
 			//Statement ausfuellen und als Query an DB senden
-			ResultSet rs = stmt.executeQuery("SELECT userID, mail, firstname, lastname FROM users" 
-					+ "WHERE userID =" + userID);
+			ResultSet rs = stmt.executeQuery("SELECT mail FROM users WHERE userID =" + userID);
 			
 			/**
 			 * Da id Primaerschluessel ist, kann max. nur ein Tupel zurueckgegeben
@@ -71,8 +70,6 @@ public class UserMapper {
 				User user = new User();
 				user.setUserID(rs.getInt("userID"));
 				user.setMail(rs.getString("Mail"));
-				user.setFirstname(rs.getString("firstname"));
-				user.setLastname(rs.getString("lastname"));
 				return user;
 			}
 		} catch (SQLException e){
@@ -94,8 +91,7 @@ public User findByMail(String mail){
 			Statement stmt = con.createStatement();
 			
 			//Statement ausfuellen und als Query an DB senden
-			ResultSet rs = stmt.executeQuery("SELECT userID, mail, firstname, lastname FROM users" 
-					+ "WHERE mail =" + mail);
+			ResultSet rs = stmt.executeQuery("SELECT userID, mail FROM users WHERE mail =" + mail);
 			
 			/**
 			 * Da mail einzigartig ist, kann max. nur ein Tupel zurueckgegeben
@@ -106,8 +102,6 @@ public User findByMail(String mail){
 				User user = new User();
 				user.setUserID(rs.getInt("userID"));
 				user.setMail(rs.getString("mail"));
-				user.setFirstname(rs.getString("firstname"));
-				user.setLastname(rs.getString("lastname"));
 				return user;
 			}
 		} catch (SQLException e){
@@ -141,7 +135,7 @@ public User findByMail(String mail){
 			 * Primaerschluesselwert ist.
 			 */
 			
-			ResultSet rs = stmt.executeQuery("SELECT MAX(useriD) AS maxUserID" + "FROM users");
+			ResultSet rs = stmt.executeQuery("SELECT MAX(useriD) AS maxUserID FROM users");
 			
 			if (rs.next()){
 				
@@ -155,11 +149,16 @@ public User findByMail(String mail){
 				stmt = con.createStatement();
 				
 				//Einfuegeoperation fuer Statement
-				stmt.executeUpdate("INSERT INTO users (userID, mail, firstname, lastname)" + "VALUES ('" + user.getUserID() + "','" + user.getMail() + "','" + user.getFirstname() + "','" + user.getLastname() + "')" );
+				stmt.executeUpdate("INSERT INTO users (userID, mail) VALUES (" 
+				+ user.getUserID() 
+				+ ",\"" + user.getMail()  
+				+ ")");
 				
 				return user;
 				
 			} 
+			
+			
 			
 		}catch (SQLException e){
 			e.printStackTrace();
@@ -187,7 +186,7 @@ public User findByMail(String mail){
 		try{
 			Statement stmt = con.createStatement();
 			
-			stmt.executeUpdate("DELETE FROM users" + "WHERE userID =" + user.getUserID());
+			stmt.executeUpdate("DELETE FROM users WHERE userID =" + user.getUserID());
 			
 		} catch(SQLException e){
 			e.printStackTrace();
@@ -212,8 +211,12 @@ public User findByMail(String mail){
 		try{
 			Statement stmt = con.createStatement();
 			
-			stmt.executeUpdate("UPDATE users" + "SET firstname ='" + user.getFirstname() + "'," + "lastname ='" + user.getLastname() + "WHERE userID =" + user.getUserID());
-		
+			stmt.executeUpdate("UPDATE users SET "
+					+ "mail=\"" +user.getMail()+ "\","
+					+ "where userID=" + user.getUserID()					
+					);
+			
+			
 		} catch(SQLException e){
 			e.printStackTrace();
 		}
