@@ -58,6 +58,9 @@ public class NoteMapper {
 	 */
 	
 	public Note createNote(Note note){
+		
+		
+		
 		//DB Verbindung erstellen
 		Connection con = DBConnection.connection();
 		
@@ -68,17 +71,10 @@ public class NoteMapper {
 			//Statement ausfuellen und als Query an DB senden
 			ResultSet rs = stmt.executeQuery("SELECT MAX(noteID) AS maxnoteID" + "FROM notes");
 			
-			String modDate = null;
-			if (note.getModDate() != null){
-				SimpleDateFormat mySQLformat = new SimpleDateFormat("yyyy-MM-dd");
-				modDate = mySQLformat.format(note.getModDate());
-			}
 			
-			String creDate = null;
-			if (note.getCreDate() != null){
+			
 				SimpleDateFormat mySQLformat = new SimpleDateFormat("yyyy-MM-dd");
-				creDate = mySQLformat.format(note.getCreDate());
-			}
+	
 			
 			/**
 			 * Es kann max. ein Ergebnis zurueck gegeben werden, da die id der Primaerschluessel ist.
@@ -90,10 +86,24 @@ public class NoteMapper {
 				note.setNoteID(rs.getInt("maxnoteID") + 1);
 				stmt = con.createStatement();
 				
+				
 				// Jetzt erst erfolgt die tatsächliche Einfügeoperation
+				
+				stmt.executeUpdate("INSERT INTO notes(noteId,noteTitle, noteContent, creDate, modDate, userID) VALUES ("
+				 		+ note.getNoteID()
+				 		+ ",\"" +note.getNoteTitle()+ "\""
+				 		+ ",\"" +note.getNoteContent()+ "\""
+				 		+ ",\"" +mySQLformat.format(note.getCreDate())+ "\""
+						+ ",\"" +mySQLformat.format(note.getModDate())+ "\""
+						+ ",\"" +note.getUserID()+ "\""
+				 		+ ")");
+				
+				/**
 				stmt.executeUpdate("INSERT INTO notes (noteID, noteTitle, noteContent, creDate, modDate, userID)"
 									+ "VALUES (" + note.getNoteID() + "," + note.getNoteTitle() + "," 
 									+ note.getNoteContent() + "," + creDate + "," + modDate + ")");
+									
+								*/
 			}
 		}
 		catch (SQLException e){
@@ -118,15 +128,18 @@ public class NoteMapper {
 	public Note updateNote(Note note){
 		Connection con = DBConnection.connection();
 		
-		String modDate = null;
-		if (note.getModDate() != null){
-			SimpleDateFormat mySQLformat = new SimpleDateFormat("yyyy-MM-dd");
-			modDate = mySQLformat.format(note.getModDate());
-		}
 		
-		try{
+			SimpleDateFormat mySQLformat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		
+		try {
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("UPDATE notes " + "SET title ='" + note.getNoteTitle() + "'," + "noteContent ='" + note.getNoteContent() + "'," + "noteModDate =" + modDate + "WHERE noteID =" + note.getNoteID());
+			stmt.executeUpdate("UPDATE notes SET "
+					+ "title=\"" +note.getNoteTitle()+ "\","
+					+ "noteContent=\"" +note.getNoteContent()+ "\","
+					+ "modDate=\"" + mySQLformat.format(note.getModDate())+ "\""
+					+ "where noteID=" + note.getNoteID()					
+					);
 		}
 		
 		catch(SQLException e){
@@ -155,12 +168,15 @@ public class NoteMapper {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
 
 	public Vector<Note> findByUser(User user) {
 		// DB-Verbindung holen und Variablen zurücksetzen
 				int userID = user.getUserID();
 				Connection con = DBConnection.connection();
-				int noteID = 0;
+		//		int noteID = 0;
 
 				Vector<Note> result = new Vector<Note>();
 				
@@ -171,59 +187,60 @@ public class NoteMapper {
 					Statement stmt = con.createStatement();
 					
 					//Statement ausfuellen und als Query an DB schicken
-					ResultSet rs = stmt.executeQuery("SELECT noteID FROM notes "
-							+ "WHERE userID=" + userID);
+					ResultSet rs = stmt.executeQuery("SELECT noteID, noteTitle FROM notes WHERE userID=\"" 
+					+ user.getUserID()
+					+ "\"");
+
 					
 					while (rs.next()){
-						
-					
-					noteID = rs.getInt("noteID");
-					
-					noteIDs.add(noteID);
-					
+					Note note = new Note();
+					note.setNoteID(rs.getInt("noteID"));
+					note.setNoteTitle(rs.getString("noteTitle"));
+					result.add(note);
 					}
-
-			}
+					
+				}
+					
+					
 			catch (SQLException e){
 				e.printStackTrace();
 				return null;
 			}
-			
-			try{
 				
-				for(int i = 0; i < noteIDs.size(); i++){
-					
-					noteID = noteIDs.get(i);
-					
-						//Leeres SQL Statement anlegen
-						Statement stmt2 = con.createStatement();
-						
-						//Statement ausfuellen und als Query an DB schicken
-						ResultSet rs2 = stmt2.executeQuery("SELECT noteID, noteTitle, creaDate, modDate FROM notes "
-								+ "WHERE noteID=" + noteID);
-						
-						while (rs2.next()){
-							
-						
-							Note note = new Note();
-							note.setNoteID(rs2.getInt("noteID"));
-							note.setNoteTitle(rs2.getString("noteTitle"));
-							note.setCreDate(rs2.getDate("creaDate"));
-							note.setModDate(rs2.getDate("modDate"));
-							
-							// Neues Objekt wird dem Ergebnisvektor hinzugefuegt
-							result.addElement(note);
-						
-						}
-				}
-			}
-				catch (SQLException e){
-
-					e.printStackTrace();
-					return null;
-				}
 				return result;
-
 	}
+	
+	
+public Note findNoteByID(int id)  {
+		
+	Connection con = DBConnection.connection(); 
+	Note currentNote = new Note();
+	currentNote.setNoteID(id);
+		
+		
+		try {
+		Statement stmt = con.createStatement(); 
+		ResultSet rs = stmt.executeQuery("SELECT noteTitle, noteContent, noteCreDate, noteModDate FROM notes where noteID="
+				+ id); 
+	    if(rs.next()) {
+	    	
+	    	currentNote.setNoteTitle(rs.getString("noteTitle")); 
+	    	currentNote.setNoteContent(rs.getString("noteContent"));
+	    	currentNote.setCreDate(rs.getDate("creDate"));
+	    	currentNote.setModDate(rs.getDate("modDate"));
+	    	
+	    	return currentNote;
+	    }
+		
+		
+	} catch (SQLException e) {  
+		e.printStackTrace();
+		return null;
+	}
+	
+	return null;
+}
+	
+	
 	
 }
