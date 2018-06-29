@@ -2,8 +2,6 @@ package com.hdm.itprojekt.client;
 
 import java.io.Serializable;
 
-import com.google.appengine.api.users.UserService;
-import com.google.appengine.api.users.UserServiceFactory;
 import com.hdm.itprojekt.server.LoginServiceImpl;
 import com.hdm.itprojekt.shared.bo.User;
 
@@ -28,8 +26,6 @@ public class LoginInfo implements Serializable{
 	private String logoutUrl;
 	private String emailAddress;
 
-	UserService userService = UserServiceFactory.getUserService();
-	com.google.appengine.api.users.User user = userService.getCurrentUser();
 	
 	
 	public boolean isLoggedIn(){
