@@ -16,7 +16,7 @@
   <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
-  <!-- Other module inherits                                      -->
+  <!-- ssOther module inherits                                      -->
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='com.hdm.itprojekt.client.ITProjekt'/>
