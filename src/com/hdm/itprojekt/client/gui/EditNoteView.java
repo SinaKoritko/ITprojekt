@@ -2,6 +2,7 @@ package com.hdm.itprojekt.client.gui;
 
 import java.util.Date;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -166,7 +167,6 @@ public class EditNoteView extends Update{
 				 * Mehrfach-Klicks und daraus entstehende, unnoetige Eintraege in
 				 * der Datenbank zu verhindern.
 				 */
-				saveNoteBtn.setEnabled(false);
 				
 				
 				currentNote.setNoteTitle(noteTitle.getText());
@@ -209,8 +209,48 @@ public class EditNoteView extends Update{
 		});
 		
 		
+		deleteNoteBtn.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event){
+				
+				noteAdministration.deleteNote(currentNote, deleteNoteCallback());
+				
+				Update update = new NoteOverview();
+				RootPanel.get("contentBox").clear();
+				RootPanel.get("contentBox").add(update);
+				
+			}
+			
+		});
+		
+		
+		
 			}
 		
+	
+	private AsyncCallback<Void> deleteNoteCallback(){
+		AsyncCallback<Void> asyncCallback = new AsyncCallback<Void>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Notiz konnte nicht geloescht werden");
+				
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				Window.alert("Notiz wurde geloescht");
+				
+				Update update = new NoteOverview();
+				RootPanel.get("contentBox").clear();
+				RootPanel.get("contentBox").add(update);
+				
+			}
+			
+		};
+		return asyncCallback;
+	}
+	
+	
 			
 	
 	
