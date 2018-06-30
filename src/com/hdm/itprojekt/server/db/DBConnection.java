@@ -31,7 +31,7 @@ public class DBConnection {
 	 * einen eingerichteten Zugang angesprochen werden.
 	 */
 	
-	private static String localUrl = "jdbc:mysql://127.0.0.1:3306/notebee";
+	private static String localUrl = "jdbc:mysql://127.0.0.1:3306/notebee?user=root&password=rootroot";
 
 	
 	/**
@@ -60,8 +60,8 @@ public class DBConnection {
 			 * vollen Zugriff auf die DB hat.
 			 */
 			
-			String user = "root";
-			String password = "rootroot";
+			//String user = "root";
+			//String password = "rootroot";
 			
 			try{
 				if (SystemProperty.environment.value() == SystemProperty.Environment.Value.Production){
@@ -81,6 +81,7 @@ public class DBConnection {
 					 * Local MySQL instance to use during development.
 					 */
 					
+					//Class.forName("com.mysql.jdbc.Driver");
 					Class.forName("com.mysql.jdbc.Driver");
 					url = localUrl;
 		
@@ -99,7 +100,8 @@ public class DBConnection {
 				// Fuer Deployment hier nur (url) uebergeben und in if/else
 				// jeweils GoogleDriver und local
 				
-				con = DriverManager.getConnection(url, user, password);
+				//con = DriverManager.getConnection(url, user, password);
+				con = DriverManager.getConnection(url);
 			}
 			
 			/**

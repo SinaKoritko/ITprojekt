@@ -93,20 +93,18 @@ public class ITProjekt implements EntryPoint {
 	private HorizontalPanel header = new HorizontalPanel();
 	private VerticalPanel contentPanel = new VerticalPanel();
 	private VerticalPanel navigationPanel = new VerticalPanel();
-	//private VerticalPanel navPanel = new VerticalPanel();
 	private VerticalPanel navXtraPanel = new VerticalPanel();
 	private HorizontalPanel footer = new HorizontalPanel();
 	
 	private Label logo = new Label("Notebee");
 	private Label usernameLabel = new Label ();
-	//private Button editUserBtn = new Button("edit User");
+	private Button createNoteBtn = new Button("new note");
 	private Anchor loginLink = new Anchor("login");
+	private Anchor logoutLink = new Anchor("logout");
 	private Label copyright = new Label("(c) Hochschule der Medien, Sina Koritko");
 	//final CellList<String> noteCellList = new CellList<String>(noteCell);
 	final CellList<Note> nCellList = new CellList<Note>(nCell, keyProvider);
 	final Label noteLabel = new Label();
-	
-	final static Button createNoteBtn = new Button("new note");
 	
 	
 	
@@ -143,9 +141,7 @@ public class ITProjekt implements EntryPoint {
 				loginInfo = result;
 				ClientsideSettings.setLoginInfo(result);
 				if(loginInfo.isLoggedIn()) {
-					Update update = new NoteOverview();
-					RootPanel.get("contentBox").clear();
-					RootPanel.get("contentBox").add(update);	
+					loadView();	
 				}
 				else {
 					loadLogin();
@@ -155,33 +151,8 @@ public class ITProjekt implements EntryPoint {
 		
 		});
 		
-	//Auslesen aktuelles Benutzerprofil aus Datenbank
-		
-		administrationService.getUserByMail(ClientsideSettings.getLoginInfo().getMail(), getCurrentUserCallback());
-		
-		/**noteCellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);*/
-	
-		//Add selection model to handle user selection
-		
-		/**noteCellList.setSelectionModel(noteSelectionModel); */
-
-		//Connect list to data provider
-		
-		/**noteDataProvider.addDataDisplay(noteCellList);*/
-		
-		nCellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
-
-		nCellList.setSelectionModel(nSelectionModel);
-	
-		//Conenct list to data provider
-		nDataProvider.addDataDisplay(nCellList);
-		
 	}
 	
-	
-	
-		
-		
 	public void loadLogin(){
 		loginLink.setHref(loginInfo.getLoginUrl());
 		
@@ -194,6 +165,13 @@ public class ITProjekt implements EntryPoint {
 		header.add(logo);
 		header.add(loginLink);
 		footer.add(copyright);
+		
+		RootPanel.get("header").add(header);
+		RootPanel.get("contentBox").add(contentPanel);			
+		RootPanel.get("navigation").add(navigationPanel);
+		RootPanel.get("footer").add(footer);
+		
+		
 		}
 		
 
@@ -203,10 +181,35 @@ public class ITProjekt implements EntryPoint {
 		
 	
 	
+	
+	
 		
 		public void loadView(){
+			
+			//Auslesen aktuelles Benutzerprofil aus Datenbank
+			
+			administrationService.getUserByMail(ClientsideSettings.getLoginInfo().getMail(), getCurrentUserCallback());
+			
+			/**noteCellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);*/
+		
+			//Add selection model to handle user selection
+			
+			/**noteCellList.setSelectionModel(noteSelectionModel); */
+
+			//Connect list to data provider
+			
+			/**noteDataProvider.addDataDisplay(noteCellList);*/
+			
+			nCellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+
+			nCellList.setSelectionModel(nSelectionModel);
+		
+			//Conenct list to data provider
+			nDataProvider.addDataDisplay(nCellList);	
+			
+			
 		createNoteBtn.addStyleName("createNoteBtn");
-		loginLink.setStyleName("loginLink");
+		logoutLink.setStyleName("loginLink");
 		logo.setStyleName("logo");
 		usernameLabel.setStyleName("displayUsername");
 		header.setStyleName("header");
@@ -225,19 +228,17 @@ public class ITProjekt implements EntryPoint {
 		
 		header.add(logo);
 		header.add(usernameLabel);
-		//header.add(editUserBtn);
-		header.add(loginLink);
-		
-		navigationPanel.add(nCellList);
+		header.add(logoutLink);
+		logoutLink.setHref(loginInfo.getLogoutUrl());
 		//navPanel.add(noteCellList);
+		navigationPanel.add(createNoteBtn);
 		navigationPanel.add(noteLabel);
 		noteLabel.setText("Waehle eine Notiz aus:");
-		navXtraPanel.add(createNoteBtn);
-	
-		
+		navigationPanel.add(nCellList);
+		//navXtraPanel.add(createNoteBtn);	
 		footer.add(copyright);
 		
-		
+
 
 		/**
 		 * Associate main panel with HTML host page
@@ -248,7 +249,6 @@ public class ITProjekt implements EntryPoint {
 		RootPanel.get("contentBox").add(contentPanel);			
 		RootPanel.get("navigation").add(navigationPanel);
 		//RootPanel.get("navigation").add(navPanel);
-		RootPanel.get("navigation").add(navXtraPanel);
 		RootPanel.get("footer").add(footer);
 		
 		

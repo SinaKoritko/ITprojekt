@@ -32,6 +32,8 @@ public class NoteOverview extends Update{
 
 	
 	final VerticalPanel contentPanel = new VerticalPanel();
+	final VerticalPanel navigationPanel = new VerticalPanel();
+	
 	final Button createNoteBtn = new Button("new note");
 	
 	
@@ -39,7 +41,7 @@ public class NoteOverview extends Update{
 	
 	createNoteBtn.setStyleName("btns");
 	
-	contentPanel.add(createNoteBtn);
+	//contentPanel.add(createNoteBtn);
 	RootPanel.get("contentBox").add(contentPanel);
 	
 	
