@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -144,10 +145,8 @@ public class CreateNoteView extends Update {
 				 * Mehrfach-Klicks und daraus entstehende, unnoetige Eintraege in
 				 * der Datenbank zu verhindern.
 				 */
-				saveNoteBtn.setEnabled(false);
 				
 				Note newNote = new Note();
-				newNote.setNoteID(note.getNoteID());
 				newNote.setNoteTitle(noteTitle.getText());
 				newNote.setNoteContent(textArea.getText());
 				Date currentDate = new Date();
@@ -161,6 +160,7 @@ public class CreateNoteView extends Update {
 				noteAdministration.createNote(newNote, new AsyncCallback<Note>(){
 					
 						public void onFailure(Throwable errorMessage){
+							Window.alert("Fehler beim Erstellen der Notiz");
 						}
 						
 						public void onSuccess(Note result){ //Wenn DB Connection hergestellt wurde und Notiz gespeichert wurde wird neue View geladen
