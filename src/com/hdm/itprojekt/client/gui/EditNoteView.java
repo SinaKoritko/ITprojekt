@@ -214,9 +214,6 @@ public class EditNoteView extends Update{
 				
 				noteAdministration.deleteNote(currentNote, deleteNoteCallback());
 				
-				Update update = new NoteOverview();
-				RootPanel.get("contentBox").clear();
-				RootPanel.get("contentBox").add(update);
 				
 			}
 			
