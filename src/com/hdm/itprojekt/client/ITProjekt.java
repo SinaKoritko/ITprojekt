@@ -9,6 +9,7 @@ import com.hdm.itprojekt.shared.bo.Note;
 import com.hdm.itprojekt.shared.bo.User;
 import com.hdm.itprojekt.client.gui.Update;
 import com.hdm.itprojekt.shared.FieldVerifier;
+import com.hdm.itprojekt.shared.NoteAdministration;
 import com.hdm.itprojekt.shared.NoteAdministrationAsync;
 import com.hdm.itprojekt.shared.bo.User;
 import com.hdm.itprojekt.client.gui.*;
@@ -60,7 +61,7 @@ public class ITProjekt implements EntryPoint {
 	LoginServiceAsync loginService = GWT.create(LoginService.class);
 	private LoginInfo loginInfo = null;
 	
-	private static NoteAdministrationAsync administrationService = ClientsideSettings.getAdministration();
+	private static NoteAdministrationAsync administrationService = GWT.create(NoteAdministration.class);
 	
 	private User currentUser = null;
 	
