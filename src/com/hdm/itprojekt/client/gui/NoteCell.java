@@ -13,9 +13,9 @@ import com.hdm.itprojekt.shared.bo.Note;
  * 
  */
 
-public class NoteCell extends AbstractCell<Note> {
+//public class NoteCell extends AbstractCell<Note> {
+public class NoteCell extends AbstractCell<Note>{
 
-	@Override
 	public void render(Context context, Note value, SafeHtmlBuilder sb) {
 		//Value can be null, so do a null check
 		
@@ -25,7 +25,9 @@ public class NoteCell extends AbstractCell<Note> {
 		
 		sb.appendHtmlConstant("<div notiztitel>");
 		sb.appendEscaped(value.getNoteTitle());
+		//sb.appendEscaped(value.getNoteTitle());
 		sb.appendHtmlConstant("</div>");
 	}
+
 
 }

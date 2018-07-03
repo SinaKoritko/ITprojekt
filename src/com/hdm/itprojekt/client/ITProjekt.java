@@ -15,8 +15,12 @@ import com.hdm.itprojekt.shared.bo.User;
 import com.hdm.itprojekt.client.gui.*;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
+import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -31,6 +35,7 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.core.java.util.Arrays;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -45,6 +50,7 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
+import com.google.gwt.view.client.TreeViewModel.NodeInfo;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -58,35 +64,43 @@ import com.google.gwt.user.client.ui.Label;
  */
 public class ITProjekt implements EntryPoint {
 	
+	
+	
 	LoginServiceAsync loginService = GWT.create(LoginService.class);
 	private LoginInfo loginInfo = null;
 	
 	private static NoteAdministrationAsync administrationService = GWT.create(NoteAdministration.class);
 	
 	private User currentUser = null;
+	private Note selectedNote = null;
 	
-	TextCell noteCell = new TextCell();
+	
+	NoteCell noteCell = new NoteCell();
+	CellList<Note> cellList = new CellList<Note>(noteCell, keyProvider);
+	
+	
+	ListDataProvider<Note> dataProvider = new ListDataProvider<Note>();
 	
 	private ArrayList<Note> notes = null;
 	
-	NoteCell nCell = new NoteCell();
+	
 	static ProvidesKey<Note> keyProvider = new ProvidesKey<Note>(){
 		public Object getKey(Note item){
-			//Always do a null check
-			return (item == null) ? null : item.getNoteID();
+			//null check
+			return(item==null) ? null : item.getNoteID();
 		}
 	};
 	
-	public final static SingleSelectionModel<String> noteSelectionModel = new SingleSelectionModel<String>();
-	public final static SingleSelectionModel<Note> nSelectionModel = new SingleSelectionModel<Note>(keyProvider);
+	private SingleSelectionModel<Note> selectionModel = new SingleSelectionModel<Note>(keyProvider);
+	
 	
 	//DataProvider erstellen
 	
-	//public static ListDataProvider<String> noteDataProvider = new ListDataProvider<String>();
-	//public static List <String> noteList = noteDataProvider.getList();
 	
-	public static ListDataProvider<Note> nDataProvider = new ListDataProvider<Note>();
-	public static List<Note> nList = nDataProvider.getList();
+	public static ListDataProvider<Note> noteDataProvider = new ListDataProvider<Note>();
+	public static List<Note> nList = noteDataProvider.getList();
+	
+	
 	
 	
 	
@@ -104,7 +118,7 @@ public class ITProjekt implements EntryPoint {
 	private Anchor logoutLink = new Anchor("logout");
 	private Label copyright = new Label("(c) Hochschule der Medien, Sina Koritko");
 	//final CellList<String> noteCellList = new CellList<String>(noteCell);
-	final CellList<Note> nCellList = new CellList<Note>(nCell, keyProvider);
+	//final CellList<Note> nCellList = new CellList<Note>(nCell, keyProvider);
 	final Label noteLabel = new Label();
 	
 	
@@ -191,6 +205,9 @@ public class ITProjekt implements EntryPoint {
 			
 			administrationService.getUserByMail(ClientsideSettings.getLoginInfo().getMail(), getCurrentUserCallback());
 			
+			
+			
+			
 			/**noteCellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);*/
 		
 			//Add selection model to handle user selection
@@ -201,12 +218,12 @@ public class ITProjekt implements EntryPoint {
 			
 			/**noteDataProvider.addDataDisplay(noteCellList);*/
 			
-			nCellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
+		//	nCellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
-			nCellList.setSelectionModel(nSelectionModel);
+		//	nCellList.setSelectionModel(nSelectionModel);
 		
 			//Conenct list to data provider
-			nDataProvider.addDataDisplay(nCellList);	
+		//	noteDataProvider.addDataDisplay(nCellList);	
 			
 			
 		createNoteBtn.addStyleName("createNoteBtn");
@@ -231,12 +248,13 @@ public class ITProjekt implements EntryPoint {
 		header.add(usernameLabel);
 		header.add(logoutLink);
 		logoutLink.setHref(loginInfo.getLogoutUrl());
-		//navPanel.add(noteCellList);
+		
 		navigationPanel.add(createNoteBtn);
 		navigationPanel.add(noteLabel);
 		noteLabel.setText("Waehle eine Notiz aus:");
-		navigationPanel.add(nCellList);
-		//navXtraPanel.add(createNoteBtn);	
+		navigationPanel.add(cellList);
+		dataProvider.addDataDisplay(cellList);
+		
 		footer.add(copyright);
 		
 
@@ -267,13 +285,42 @@ public class ITProjekt implements EntryPoint {
 		});
 		*/
 		
-		nSelectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler(){
+		//List<Note> list = dataProvider.getList();
+	//	list.add(note);
+		
+		
+			administrationService.getNotesOfUser(currentUser, new AsyncCallback<ArrayList<Note>>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				
+				
+			}
+
+			@Override
+			public void onSuccess(ArrayList<Note> result) {
+				for (Note n : result) {
+					dataProvider.getList().add(n);
+				}
+				
+			}
+			
+		});
+		
+		
+		selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler(){
 			public void onSelectionChange(SelectionChangeEvent event) {
 				
+				Note selection = selectionModel.getSelectedObject();
+				if(selection instanceof Note){
+					setSelectedNote((Note) selection);
+				}
+						
+				/**
 				Update update = new EditNoteView();
 				RootPanel.get("contentBox").clear();
 				RootPanel.get("contentBox").add(update);
-				
+				*/
 			}
 		});
 		
@@ -323,6 +370,14 @@ public class ITProjekt implements EntryPoint {
 		};
 		return asyncCallback;
 	}
+
+	public Note getSelectedNote() {
+		return selectedNote;
+	}
+
+	public void setSelectedNote(Note selectedNote) {
+		this.selectedNote = selectedNote;
+	}
 	
 	
 	
@@ -338,14 +393,15 @@ public class ITProjekt implements EntryPoint {
 			public void onSuccess(ArrayList<Note> result) {
 				ClientsideSettings.getLogger().severe("Success GetNotesOfUserCallback: " + result.getClass().getSimpleName());
 				notes = result;
-				nDataProvider.getList().clear();
+				noteDataProvider.getList().clear();
 				for(int i = 0; i < notes.size(); i++){
-					nDataProvider.getList().add(notes.get(i));
+					noteDataProvider.getList().add(notes.get(i));
 				}
 			}
 			
 		};
 		return asyncCallback;
 	}
+	
 	
 }
