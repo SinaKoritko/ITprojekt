@@ -179,9 +179,12 @@ public class EditNoteView extends Update{
 				// bestehende Notiz wird anhand von currentUser ID editiert
 				noteAdministration.editNote(currentNote, new AsyncCallback<Note>(){
 					public void onFailure(Throwable errorMessage){
+						Window.alert("Notiz konnte nicht editiert gespeichert werden");
 					}
 					
 					public void onSuccess(Note result){
+						Window.alert("Notiz wurde editiert gespeichert");
+						
 						Update update = new NoteOverview();
 						RootPanel.get("contentBox").clear();
 						RootPanel.get("contentBox").add(update);
