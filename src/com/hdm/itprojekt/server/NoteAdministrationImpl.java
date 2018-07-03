@@ -88,8 +88,7 @@ implements NoteAdministration {
 	@Override
 	public User createUser(User user) throws IllegalArgumentException {
 		User currentuser = new User();
-		currentuser = this.userMapper.insert(user);
-		return currentuser;
+		return this.userMapper.insert(currentuser);
 	}
 	
 	
