@@ -98,7 +98,7 @@ public class ITProjekt implements EntryPoint {
 	
 	
 	public static ListDataProvider<Note> noteDataProvider = new ListDataProvider<Note>();
-	public static List<Note> nList = noteDataProvider.getList();
+	public static List<Note> noteList = noteDataProvider.getList();
 	
 	
 	
@@ -220,10 +220,10 @@ public class ITProjekt implements EntryPoint {
 			
 		//	nCellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
-		//	nCellList.setSelectionModel(nSelectionModel);
+			cellList.setSelectionModel(selectionModel);
 		
 			//Conenct list to data provider
-		//	noteDataProvider.addDataDisplay(nCellList);	
+		dataProvider.addDataDisplay(cellList);	
 			
 			
 		createNoteBtn.addStyleName("createNoteBtn");
@@ -234,8 +234,9 @@ public class ITProjekt implements EntryPoint {
 		footer.setStyleName("footer");
 		copyright.setStyleName("copyright");
 		createNoteBtn.setStyleName("btns");
-		
-		
+		noteLabel.setStyleName("noteLabel");
+		cellList.setStyleName("cellList");
+		cellList.setStyleName("cellList");
 		
 		/**Zuteilung der Widgets zum jeweiligen Panel
 		 * */
@@ -285,8 +286,7 @@ public class ITProjekt implements EntryPoint {
 		});
 		*/
 		
-		//List<Note> list = dataProvider.getList();
-	//	list.add(note);
+	
 		
 		
 			administrationService.getNotesOfUser(currentUser, new AsyncCallback<ArrayList<Note>>(){
