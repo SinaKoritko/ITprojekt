@@ -79,7 +79,7 @@ public class ITProjekt implements EntryPoint {
 	CellList<Note> cellList = new CellList<Note>(noteCell, keyProvider);
 	
 	
-	ListDataProvider<Note> dataProvider = new ListDataProvider<Note>();
+	public static ListDataProvider<Note> dataProvider = new ListDataProvider<Note>();
 	
 	private ArrayList<Note> notes = null;
 	
@@ -97,8 +97,7 @@ public class ITProjekt implements EntryPoint {
 	//DataProvider erstellen
 	
 	
-	public static ListDataProvider<Note> noteDataProvider = new ListDataProvider<Note>();
-	public static List<Note> noteList = noteDataProvider.getList();
+	public static List<Note> noteList = dataProvider.getList();
 	
 	
 	
@@ -220,10 +219,10 @@ public class ITProjekt implements EntryPoint {
 			
 		//	nCellList.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
-			cellList.setSelectionModel(selectionModel);
+		//	nCellList.setSelectionModel(nSelectionModel);
 		
 			//Conenct list to data provider
-		dataProvider.addDataDisplay(cellList);	
+		//	noteDataProvider.addDataDisplay(nCellList);	
 			
 			
 		createNoteBtn.addStyleName("createNoteBtn");
@@ -235,7 +234,6 @@ public class ITProjekt implements EntryPoint {
 		copyright.setStyleName("copyright");
 		createNoteBtn.setStyleName("btns");
 		noteLabel.setStyleName("noteLabel");
-		cellList.setStyleName("cellList");
 		cellList.setStyleName("cellList");
 		
 		/**Zuteilung der Widgets zum jeweiligen Panel
@@ -286,7 +284,8 @@ public class ITProjekt implements EntryPoint {
 		});
 		*/
 		
-	
+		//List<Note> list = dataProvider.getList();
+	//	list.add(note);
 		
 		
 			administrationService.getNotesOfUser(currentUser, new AsyncCallback<ArrayList<Note>>(){
@@ -365,7 +364,7 @@ public class ITProjekt implements EntryPoint {
 				Update update = new NoteOverview();
 				RootPanel.get("contentBox").add(update);
 				
-				administrationService.getNotesOfUser(currentUser, getNotesOfUserCallback());		
+				administrationService.getNotesOfUser(currentUser, new GetNotesOfUserCallback());		
 			}
 		};
 		return asyncCallback;
@@ -381,8 +380,7 @@ public class ITProjekt implements EntryPoint {
 	
 	
 	
-	private AsyncCallback<ArrayList<Note>> getNotesOfUserCallback(){
-		AsyncCallback<ArrayList<Note>> asyncCallback = new AsyncCallback<ArrayList<Note>>(){
+	private  class GetNotesOfUserCallback implements AsyncCallback<ArrayList<Note>>{
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -393,14 +391,12 @@ public class ITProjekt implements EntryPoint {
 			public void onSuccess(ArrayList<Note> result) {
 				ClientsideSettings.getLogger().severe("Success GetNotesOfUserCallback: " + result.getClass().getSimpleName());
 				notes = result;
-				noteDataProvider.getList().clear();
+				dataProvider.getList().clear();
 				for(int i = 0; i < notes.size(); i++){
-					noteDataProvider.getList().add(notes.get(i));
+					dataProvider.getList().add(notes.get(i));
 				}
-			}
-			
 		};
-		return asyncCallback;
+
 	}
 	
 	

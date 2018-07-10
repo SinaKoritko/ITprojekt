@@ -151,9 +151,10 @@ h1 {
 }
 
 .cellList{
-	width: 20px;
-	height: 50 px;
+	width: 10px;
+	height: 20 px;
 	background-color: grey;
+	border: 1px solid black;
 }
 
 .noteLabel{

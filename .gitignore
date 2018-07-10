@@ -51,4 +51,8 @@ war/WEB-INF/classes/
 /.factorypath
 .svn/
 /.settings
+<<<<<<< HEAD
 /.gwt
+=======
+/.gwt
+>>>>>>> refs/remotes/origin/master
